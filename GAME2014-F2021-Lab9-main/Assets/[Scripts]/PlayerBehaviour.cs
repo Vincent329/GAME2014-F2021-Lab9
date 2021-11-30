@@ -25,6 +25,10 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Sound FX")] 
     public AudioSource jumpSound;
 
+    [Header("Dust Trail")]
+    public ParticleSystem dustTrail;
+    public Color dustTrailColor;
+
     private Rigidbody2D rigidbody;
     private Animator animatorController;
 
@@ -34,6 +38,8 @@ public class PlayerBehaviour : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         animatorController = GetComponent<Animator>();
         jumpSound = GetComponent<AudioSource>();
+
+        dustTrail = GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -66,6 +72,8 @@ public class PlayerBehaviour : MonoBehaviour
                 x = FlipAnimation(x);
                 animatorController.SetInteger("AnimationState", (int) PlayerAnimationState.RUN); // RUN State
                 state = PlayerAnimationState.RUN;
+                CreateDustTrail();
+
             }
             else
             {
@@ -114,6 +122,12 @@ public class PlayerBehaviour : MonoBehaviour
 
         transform.localScale = new Vector3(x, 1.0f);
         return x;
+    }
+
+    private void CreateDustTrail()
+    {
+        dustTrail.GetComponent<Renderer>().material.SetColor("_Color", dustTrailColor);
+        dustTrail.Play();
     }
 
     // EVENTS
