@@ -65,6 +65,7 @@ public class EnemyController : MonoBehaviour
                     if (collider.gameObject.CompareTag("Player"))
                     {
                         var hit = Physics2D.Raycast(lookInFrontPoint.position, Vector3.Normalize(collider.transform.position - lookInFrontPoint.position), 5.0f, enemyLOS.contactFilter.layerMask);
+                        Debug.DrawLine(lookInFrontPoint.position, collider.transform.position, Color.red);
                         
                         if((hit) && (hit.collider.gameObject.CompareTag("Player")))
                         {
@@ -137,6 +138,9 @@ public class EnemyController : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, lookAheadPoint.position);
+        Gizmos.color = Color.yellow;
+
         Gizmos.DrawLine(transform.position, lookInFrontPoint.position);
+        
     }
 }
